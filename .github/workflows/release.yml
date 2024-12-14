@@ -26,12 +26,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v6
         with:
           build-args: |
             MOODLE_VERSION=${{ matrix.moodle_version }}
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository }}:${{ matrix.moodle_version }}
+          tags: ${{ env.REGISTRY }}/projektadler/adler-moodle:${{ matrix.moodle_version }}
 
 #
 #      - name: Prepare release body (description)
