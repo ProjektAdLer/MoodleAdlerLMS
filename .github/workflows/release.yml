@@ -42,7 +42,7 @@ jobs:
           build-args: |
             MOODLE_VERSION=${{ matrix.moodle_version }}
           push: true
-          tags: ${{ env.REGISTRY }}/projektadler/adler-moodle:${{ matrix.moodle_version }}
+          tags: ${{ steps.meta.outputs.tags }}
 
 #
 #      - name: Prepare release body (description)
