@@ -23,30 +23,33 @@ RUN mv setup.sh.tmp setup.sh
 RUN chmod +x setup.sh
 ```
 
-## Environment variables
+## Usage
+Do NOT use the `latest` tag. It is not guaranteed to be any specific one of the supported moodle releases and moodle
+updates have to be installed manually.
+
+### Environment variables
 
 All variables from the bitnami/moodle image are supported. Additionally, the following environment variables can be set:
 
-### PHP environment variables
+#### PHP environment variables
 
 | Variable               | required | Description                                                                                                  |
 |------------------------|----------|--------------------------------------------------------------------------------------------------------------|
 | `PHP_OUTPUT_BUFFERING` | no       | Controls the output buffering behavior of PHP. Set it to adjust the buffering setting in the `php.ini` file. |
 
-### Moodle user creation variables
+#### Moodle user creation variables
 
 | Variable                             | required                     | Description                   |
 |--------------------------------------|------------------------------|-------------------------------|
 | `DECLARATIVE_SETUP_MANAGER_PASSWORD` | if role `test_users` is used | Password for the manager user |
 | `DECLARATIVE_SETUP_STUDENT_PASSWORD` | if role `test_users` is used | Password for the student user |
 
-### Other environment variables
+#### Other environment variables
 
 | Variable               | required | Description                                                                                                                           |
 |------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
 | `ADLER_PLAYBOOK_ROLES` | no       | roles to be passed to playbook, see [AdLer Playbook](https://github.com/ProjektAdLer/MoodlePlugin-playbook_adler) for a list of roles |
 
-#### Examples
 
 ## Updating moodle
 
@@ -64,16 +67,6 @@ but with this approach all additional plugins would be deleted after every updat
 A possible approach to mitigate this issue might be placing an overlay volume on top of the whole moodle directory of
 this
 moodle image. But it is unknown whether this would work and what potential issues might arise from this.
-
-## Docker Build Arguments
-
-When building the Docker image for this project, you can customize the following arguments:
-
-- `MOODLE_VERSION`: Specifies the version of Moodle to be used in the image. The default value is `latest`.
-
-These arguments allow you to control the versions of Moodle and the plugin that are used during the image build process.
-You can adjust these values according to your specific
-requirements and preferences.
 
 ## Install additional languages
 

@@ -32,6 +32,7 @@ jobs:
           images: ${{ env.REGISTRY }}/projektadler/adler-moodle
           tags: |
             type=raw,value=moodle-${{ matrix.moodle_version }}
+            type=raw,value=latest-moodle-${{ matrix.moodle_version }}
             type=semver,pattern={{version}}-moodle-${{ matrix.moodle_version }}
             type=semver,pattern={{major}}.{{minor}}-moodle-${{ matrix.moodle_version }}
             type=semver,pattern={{major}}-moodle-${{ matrix.moodle_version }}
