@@ -7,22 +7,42 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    needs: define-matrix
     permissions:
-      contents: write
+      packages: write
     strategy:
       matrix:
         moodle_version: [ '4.4', '4.5' ]
+    env:
+      REGISTRY: ghcr.io
     steps:
-      - name: Build Docker image
-        uses: docker/build-push-action@v2
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
         with:
-          context: .
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags)
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/projektadler/adler-moodle
+          tags: |
+            type=raw,value=moodle-${{ matrix.moodle_version }}
+            type=semver,pattern={{version}}-moodle-${{ matrix.moodle_version }}
+            type=semver,pattern={{major}}.{{minor}}-moodle-${{ matrix.moodle_version }}
+            type=semver,pattern={{major}}-moodle-${{ matrix.moodle_version }}
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
           build-args: |
             MOODLE_VERSION=${{ matrix.moodle_version }}
-          file: Dockerfile
           push: true
-          tags: adler-moodle:${{ matrix.moodle_version }}-${{ github.event.release.tag_name }}
+          tags: ${{ steps.meta.outputs.tags }}
 
 #
 #      - name: Prepare release body (description)
