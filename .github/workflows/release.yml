@@ -1,0 +1,53 @@
+name: Moodle Plugin CI
+
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  define-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      include_list: ${{ steps.moodle_versions.outputs.moodle_versions }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Collect list of compatible moodle versions
+        id: moodle_versions
+        run: |
+          supported_versions=$(bash get_supported_moodle_versions.sh)
+          echo "moodle_versions=$supported_versions" >> $GITHUB_OUTPUT
+
+  release:
+    runs-on: ubuntu-latest
+    needs: define-matrix
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        moodle_version: ${{ fromJSON(needs.define-matrix.outputs.include_list) }}
+    steps:
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          build-args: |
+            MOODLE_VERSION=${{ matrix.moodle_version }}
+          file: Dockerfile
+          push: false
+          tags: adler-moodle:${{ matrix.moodle_version }}-${{ github.event.release.tag_name }}
+
+#
+#      - name: Prepare release body (description)
+#        id: prep_body
+#        run: |
+#          echo "${{ github.event.release.body }}" > changes.md
+#
+#      - name: Discord notification
+#        uses: appleboy/discord-action@master
+#        with:
+#          webhook_id: ${{ secrets.DISCORD_RELEASE_CHANNEL_WEBHOOK_ID }}
+#          webhook_token: ${{ secrets.DISCORD_RELEASE_CHANNEL_WEBHOOK_TOKEN }}
+#          username: GitHub Releases
+#          message: "New release of **${{ github.repository }}**\nVersion: ${{ github.ref_name }} (${{github.event.release.name}})\n<${{ github.event.release.html_url }}>"
+#          file: changes.md
