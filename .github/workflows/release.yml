@@ -13,6 +13,8 @@ jobs:
       matrix:
         moodle_version: [ '4.4', '4.5' ]
     steps:
+      - name: Check out code
+        uses: actions/checkout@v4
       - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
