@@ -24,6 +24,7 @@ if [ ! -d "$TARGET_DIR" ]; then
     fi
 
     # Extract the zip file to the target directory
+    echo "Extracting the zip file to $TARGET_DIR"
     unzip -q "$ZIP_FILE" -d "$(dirname "$TARGET_DIR")"
     if [ $? -ne 0 ]; then
         echo "Failed to extract the zip file to $TARGET_DIR"
@@ -34,6 +35,7 @@ if [ ! -d "$TARGET_DIR" ]; then
     rm "$ZIP_FILE"
 
     # Run the upgrade script
+    echo "Running the upgrade script"
     php admin/cli/upgrade.php --non-interactive
 
     if [ $? -ne 0 ]; then
@@ -47,8 +49,8 @@ fi
 #### install main playbook (installing all plugins and potential further playbooks)
 echo "installing adler playbook"
 ADLER_PLAYBOOK_VERSION=$(jq -r '.[] | select(.name == "playbook_adler") | .version' /opt/adler/plugins.json)
-# TODO: package repo or github repo from version.json
-php local/declarativesetup/cli/install_plugin.php --package-repo=https://packages.projekt-adler.eu/packages/playbook_adler --version="$ADLER_PLAYBOOK_VERSION" --moodle-name=playbook_adler
+ADLER_PLAYBOOK_PACKAGE_REPO=$(jq -r '.[] | select(.name == "playbook_adler") | .package_repo' /opt/adler/plugins.json)
+php local/declarativesetup/cli/install_plugin.php --package-repo=$ADLER_PLAYBOOK_PACKAGE_REPO --version="$ADLER_PLAYBOOK_VERSION" --moodle-name=playbook_adler
 # copy plugins.json to playbook
 cp /opt/adler/plugins.json local/declarativesetup/playbook/adler/files/plugins.json
 

@@ -10,9 +10,9 @@
 ! is_empty_value "$PHP_OUTPUT_BUFFERING" && info "Setting PHP output_buffering option" && php_conf_set output_buffering "$PHP_OUTPUT_BUFFERING" "$PHP_CONF_FILE"
 
 
-# inject adler update
+# inject adler setup script
 if ! grep "/opt/adler/setup.sh" /opt/bitnami/scripts/moodle/entrypoint.sh > /dev/null ; then
-  echo "inject adler update"
+  echo "inject adler setup script"
   sed -i '/^exec "$@".*/i echo "starting adler setup script" && su daemon -s /bin/bash -c "/opt/adler/setup.sh"' /opt/bitnami/scripts/moodle/entrypoint.sh
 fi
 
