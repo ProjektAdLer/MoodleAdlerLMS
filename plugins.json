@@ -1,32 +1,32 @@
 [
   {
     "package_repo": "https://packages.projekt-adler.eu/packages/moodle/",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "name": "local_declarativesetup"
   },
   {
     "package_repo": "https://packages.projekt-adler.eu/packages/moodle/",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "name": "playbook_adler"
   },
   {
     "package_repo": "https://packages.projekt-adler.eu/packages/moodle/",
-    "version": "5.0.0",
+    "version": "6.0.0",
     "name": "local_adler"
   },
   {
     "package_repo": "https://packages.projekt-adler.eu/packages/moodle/",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "name": "availability_adler"
   },
   {
     "package_repo": "https://packages.projekt-adler.eu/packages/moodle/",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "name": "mod_adleradaptivity"
   },
   {
     "package_repo": "https://packages.projekt-adler.eu/packages/moodle/",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "name": "local_logging"
   }
 ]
