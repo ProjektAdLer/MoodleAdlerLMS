@@ -13,7 +13,7 @@
 # inject adler setup script
 if ! grep "/opt/adler/setup.sh" /opt/bitnami/scripts/moodle/entrypoint.sh > /dev/null ; then
   echo "inject adler setup script"
-  sed -i '/^exec "$@".*/i echo "starting adler setup script" && chown daemon /bitnami/moodle/config.php && su daemon -s /bin/bash -c "/opt/adler/setup.sh" && chown root /bitnami/moodle/config.php' /opt/bitnami/scripts/moodle/entrypoint.sh
+  sed -i '/^exec "$@".*/i echo "starting adler setup script" && chown daemon /bitnami/moodle/config.php && su daemon -s /bin/bash -c "/opt/adler/setup.sh" || exit 1 && chown root /bitnami/moodle/config.php' /opt/bitnami/scripts/moodle/entrypoint.sh
 fi
 
 
