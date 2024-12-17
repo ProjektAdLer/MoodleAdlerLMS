@@ -1,0 +1,36 @@
+services:
+  moodle:
+    build:
+      context: .
+      args:
+        MOODLE_VERSION: 4.5
+    environment:
+      BITNAMI_DEBUG: true
+      MOODLE_DATABASE_HOST: db_moodle
+      MOODLE_DATABASE_PORT_NUMBER: 3306
+      MOODLE_DATABASE_USER: bitnami_moodle
+      MOODLE_DATABASE_PASSWORD: bitnami_moodle
+      MOODLE_DATABASE_NAME: bitnami_moodle
+      MOODLE_USERNAME: admin
+      MOODLE_PASSWORD: "Admin123!"
+      MOODLE_HOST: localhost:8528
+      PHP_POST_MAX_SIZE: 2048M
+      PHP_UPLOAD_MAX_FILESIZE: 2048M
+      DECLARATIVE_SETUP_MANAGER_PASSWORD: "Manager1234!1234"
+      DECLARATIVE_SETUP_STUDENT_PASSWORD: "Student1234!1234"
+      ADLER_PLAYBOOK_ROLES: "test_users,integration_test"
+    ports:
+      - '8528:8080'
+    tmpfs:
+      - /bitnami/moodle:rw,noexec,nosuid,size=2G
+      - /bitnami/moodledata:rw,noexec,nosuid,size=1G
+
+  db_moodle:
+    image: docker.io/bitnami/mariadb:10.11
+    environment:
+      MARIADB_USER: bitnami_moodle
+      MARIADB_PASSWORD: bitnami_moodle
+      MARIADB_ROOT_PASSWORD: bitnami_moodle
+      MARIADB_DATABASE: bitnami_moodle
+      MARIADB_CHARACTER_SET: utf8mb4
+      MARIADB_COLLATE: utf8mb4_unicode_ci
