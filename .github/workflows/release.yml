@@ -3,6 +3,8 @@ name: Moodle Plugin CI
 on:
   release:
     types: [ created ]
+  push:
+    branches: [ main ]
 
 jobs:
   release:
@@ -33,7 +35,7 @@ jobs:
           tags: |
             type=raw,value=moodle-${{ matrix.moodle_version }}
             type=raw,value=latest-moodle-${{ matrix.moodle_version }}
-            type=semver,pattern={{version}}-moodle-${{ matrix.moodle_version }}
+            type=raw,value=${{ github.ref_name }}-moodle-${{ matrix.moodle_version }}
             type=semver,pattern={{major}}.{{minor}}-moodle-${{ matrix.moodle_version }}
             type=semver,pattern={{major}}-moodle-${{ matrix.moodle_version }}
 
