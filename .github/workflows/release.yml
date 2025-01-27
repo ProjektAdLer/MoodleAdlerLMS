@@ -29,7 +29,7 @@ jobs:
 
       - name: Extract metadata (tags) - release
         if: github.event_name == 'release'
-        id: meta
+        id: meta_release
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/projektadler/adler-moodle
@@ -42,7 +42,7 @@ jobs:
       
       - name: Extract metadata (tags) - branch
         if: github.event_name == 'push'
-        id: meta
+        id: meta_branch
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/projektadler/adler-moodle
@@ -55,8 +55,7 @@ jobs:
           build-args: |
             MOODLE_VERSION=${{ matrix.moodle_version }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-
+          tags: ${{ steps.meta_release.outputs.tags || steps.meta_branch.outputs.tags }}
 #
 #      - name: Prepare release body (description)
 #        id: prep_body
