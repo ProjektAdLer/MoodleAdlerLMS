@@ -4,7 +4,7 @@ on:
   release:
     types: [ created ]
   push:
-    branches: [ main ]
+    branches: [ main, test ]
 
 jobs:
   release:
@@ -47,7 +47,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/projektadler/adler-moodle
           tags: |
-            type=raw,value=${{ github.ref_name }}-moodle-${{ matrix.moodle_version }}
+            type=raw,value=${{ github.ref }}-moodle-${{ matrix.moodle_version }}
 
       - name: Build Docker image
         uses: docker/build-push-action@v6
