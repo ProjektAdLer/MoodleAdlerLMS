@@ -27,7 +27,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags)
+      - name: Extract metadata (tags) - release
+        if: github.event_name == 'release'
         id: meta
         uses: docker/metadata-action@v4
         with:
@@ -35,9 +36,18 @@ jobs:
           tags: |
             type=raw,value=moodle-${{ matrix.moodle_version }}
             type=raw,value=latest-moodle-${{ matrix.moodle_version }}
-            type=raw,value=${{ github.ref_name }}-moodle-${{ matrix.moodle_version }}
+            type=semver,pattern={{version}}-moodle-${{ matrix.moodle_version }}
             type=semver,pattern={{major}}.{{minor}}-moodle-${{ matrix.moodle_version }}
             type=semver,pattern={{major}}-moodle-${{ matrix.moodle_version }}
+      
+      - name: Extract metadata (tags) - branch
+        if: github.event_name == 'push'
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/projektadler/adler-moodle
+          tags: |
+            type=raw,value=${{ github.ref_name }}-moodle-${{ matrix.moodle_version }}
 
       - name: Build Docker image
         uses: docker/build-push-action@v6
