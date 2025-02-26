@@ -58,11 +58,13 @@ jobs:
           tags: ${{ steps.meta_release.outputs.tags || steps.meta_branch.outputs.tags }}
 
       - name: Prepare release body (description)
+        if: github.event_name == 'release'
         id: prep_body
         run: |
           echo "${{ github.event.release.body }}" > changes.md
 
       - name: Discord notification
+        if: github.event_name == 'release'
         uses: appleboy/discord-action@master
         with:
           webhook_id: ${{ secrets.DISCORD_RELEASE_CHANNEL_WEBHOOK_ID }}
