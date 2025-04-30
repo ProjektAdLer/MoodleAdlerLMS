@@ -27,6 +27,13 @@ RUN chmod +x setup.sh
 Do NOT use the `latest` tag. It is not guaranteed to be any specific one of the supported moodle releases and moodle
 updates have to be installed manually.
 
+### plugins.json
+This file contains a list of plugins that will be automatically installed. One entry for the plugin `local_declarativesetup` has to exist, it is used by the setup script!
+
+The plugins are expected to be available as simple downloadable file at this location: `<package_repo>/<name>/<version>.zip`. Additionally a md5 file has to exist here: `<package_repo>/<name>/<version>.zip.md5`.
+
+
+
 ### Environment variables
 
 All variables from the bitnami/moodle image are supported. Additionally, the following environment variables can be set:
