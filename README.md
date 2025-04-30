@@ -64,6 +64,23 @@ All variables from the bitnami/moodle image are supported. Additionally, the fol
 > The moodle release is NOT updated automatically in any way! \
 > Incrementing MOODLE_VERSION build arg will not result in an update of moodle.
 
+### Semi automatic update
+
+> [!IMPORTANT] 
+> This approach will cause data loss / broken installations if changes are done to the moodle folder anywhere else.
+> If e.g. Plugins are installed through moodle web UI, use the manual update approach
+
+1) Create a backup of the moodle folder
+2) delete the moodle folder
+3) download and extract the new moodle version
+4) restore config.php
+5) start container
+
+Further simplification may be possible but was not yet explored.
+
+
+### manual update
+
 Moodle updates have to be done manually (Plugins are not affected by this issue).
 Follow the [Bitnami Moodle Upgrade Guide](https://docs.bitnami.com/aws/apps/moodle/administration/upgrade/).
 Sadly it is not easy to automate that process as moodle itself does not provide a way to automatically update moodle.
