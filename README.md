@@ -73,7 +73,7 @@ All variables from the bitnami/moodle image are supported. Additionally, the fol
 1) Create a backup of the moodle folder
 2) delete the moodle folder
 3) download and extract the new moodle version
-4) fix permissions `chown -R <user>:<group> <_data/>
+4) fix permissions `chown -R <user>:<group> <_data/>`
 4) restore config.php
 5) start container
 
