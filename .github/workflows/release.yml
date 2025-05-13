@@ -68,7 +68,7 @@ jobs:
           echo "${{ github.event.release.body }}" > changes.md
 
       - name: Discord notification
-        if: github.event_name == 'release'
+        if: github.event_name == 'release' && matrix.moodle_version == strategy.matrix.moodle_version[0]
         uses: appleboy/discord-action@master
         with:
           webhook_id: ${{ secrets.DISCORD_RELEASE_CHANNEL_WEBHOOK_ID }}
