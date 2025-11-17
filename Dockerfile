@@ -1,6 +1,6 @@
 ARG MOODLE_VERSION=latest
 
-FROM bitnami/moodle:${MOODLE_VERSION}
+FROM bitnamilegacy/moodle:${MOODLE_VERSION}
 
 # generate german language files
 RUN sed -i 's/^# de_DE.UTF-8 UTF-8$/de_DE.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
