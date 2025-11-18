@@ -5,7 +5,8 @@ FROM bitnamilegacy/moodle:${MOODLE_VERSION}
 # generate german language files
 RUN sed -i 's/^# de_DE.UTF-8 UTF-8$/de_DE.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
 
-RUN apt update && apt install curl unzip jq -y
+RUN apt update && apt-get install curl unzip jq -y --no-install-recommends && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY opt/adler /opt/adler
 COPY plugins.json /opt/adler
 
