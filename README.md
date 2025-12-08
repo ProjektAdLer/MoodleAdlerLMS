@@ -2,6 +2,14 @@
 
 This project extends the bitnami/moodle image for use with AdLer.
 
+> [!CAUTION]
+> Bitnami stopped publishing moodle images. This repo now points to their archive with a build from Aug 23, 2025.
+> There will be no updates to the underlying system, no moodle security or bugfixes and no new moodle versions anymore
+
+To build new base images again there are two ways:
+- Fork the [bitnami/containers repo](https://github.com/bitnami/containers/tree/main/bitnami/moodle) in the old version where moodle was still part of it. Use it to build images again
+- Create a complete custom container without using a base moodle image
+
 ## Windows Users
 
 This project works only under Linux.
